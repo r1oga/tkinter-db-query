@@ -1,4 +1,4 @@
-name: python-mega-course
+name: ptkinter-db-query
 channels:
   - conda-forge
   - defaults

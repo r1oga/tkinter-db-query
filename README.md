@@ -18,3 +18,11 @@ User can:
 
 - backend: [sqlite3](https://docs.python.org/3/library/sqlite3.html)
 - frontend/client: [tkinter](https://docs.python.org/3/library/tkinter.html)
+
+## Getting started
+
+- start executable: `./bookstore/dist/client`
+
+### Development
+
+- Create python environment: `conda create -f environment.yml`
