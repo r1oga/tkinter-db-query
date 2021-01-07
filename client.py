@@ -32,20 +32,28 @@ def inputs():
     return tuple(t.get() for t in [title_text, author_text, year_text, isbn_text])
 
 
-def get_selected_row_id(event):
-    global id
-    id = lb1.curselection()[0]
-    return id
+def get_selected_row(event):
+    global selected_row
+    global selected_index
+    selected_index = lb1.curselection()[0]
+    selected_row = lb1.get(selected_index)
+
+    for entry, attr in zip(entries, selected_row[1:]):
+        entry.delete(0, END)
+        entry.insert(END, attr)
+
+    return selected_row
 
 
 def delete():
-    backend.delete(id)
-    lb1.delete(id, id)
+    backend.delete(selected_row[0])
+    lb1.delete(selected_index, selected_index)
     return
 
 
-# @delete_lb1
-# def update():
+def update():
+    backend.update(selected_row[0], *inputs())
+    view_all()
 
 
 window = Tk()
@@ -77,7 +85,7 @@ config = {
         },
         {
             "grid": {"row": 5, "column": 3},
-            "params": {"text": "Update Selected", "width": 12},
+            "params": {"text": "Update Selected", "width": 12, "command": update},
         },
         {
             "grid": {"row": 6, "column": 3},
@@ -100,9 +108,14 @@ for grid, params in [c.values() for c in config["labels"]]:
 textvars = [c["params"]["textvariable"] for c in config["entries"]]
 title_text, author_text, year_text, isbn_text = textvars
 
+entries = []
+
 for grid, params in [c.values() for c in config["entries"]]:
     entry = Entry(window, **params)
     entry.grid(**grid)
+    entries.append(entry)
+
+e1, e2, e3, e4 = entries
 
 for grid, params in [c.values() for c in config["buttons"]]:
     b = Button(window, **params)
@@ -117,6 +130,6 @@ sb1.grid(row=2, column=2, rowspan=6)
 
 lb1.configure(yscrollcommand=sb1.set)
 sb1.configure(command=lb1.yview)
-lb1.bind("<<ListboxSelect>>", get_selected_row_id)
+lb1.bind("<<ListboxSelect>>", get_selected_row)
 
 window.mainloop()
