@@ -1,7 +1,7 @@
 from tkinter import *
 from backend import Database
 
-db = Database()
+db = Database("books.db")
 
 
 def delete_lb1(func):

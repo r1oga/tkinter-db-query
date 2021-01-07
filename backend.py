@@ -5,8 +5,8 @@ DB = "books.db"
 
 class Database:
     def connect_then_close(func):
-        def inner(self, db=DB, *args, **kwargs):
-            conn = sqlite3.connect(db)
+        def inner(self, *args, **kwargs):
+            conn = sqlite3.connect(self.db)
             cursor = conn.cursor()
             result = None
             try:
@@ -27,11 +27,18 @@ class Database:
         cursor.execute(query, args)
         return cursor.fetchall()
 
-    @connect_then_close
-    def __init__(self, cursor):
-        self.do(
-            query="CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, title TEXT, author TEXT, year INTEGER, isbn INTEGER)"
-        )
+    def __init__(self, db):
+        self.db = db
+        conn = sqlite3.connect(db)
+        cursor = conn.cursor()
+        try:
+            cursor.execute(
+                "CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, title TEXT, author TEXT, year INTEGER, isbn INTEGER)"
+            )
+        except Exception as e:
+            raise e
+        finally:
+            conn.close()
 
     def create_table(self):
         self.do(
