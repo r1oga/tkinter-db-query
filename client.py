@@ -19,10 +19,18 @@ def view_all():
 @delete_lb1
 def search():
     # print(*tuple(t.get() for t in [title_text, author_text, year_text, isbn_text]))
-    for record in backend.search(
-        *tuple(t.get() for t in [title_text, author_text, year_text, isbn_text])
-    ):
+    for record in backend.search(*inputs()):
         lb1.insert(END, record)
+
+
+def add():
+    backend.populate_table([inputs()])
+    lb1.insert(END, inputs())
+
+
+@delete_lb1
+def inputs():
+    return tuple(t.get() for t in [title_text, author_text, year_text, isbn_text])
 
 
 window = Tk()
@@ -50,7 +58,7 @@ config = {
         },
         {
             "grid": {"row": 4, "column": 3},
-            "params": {"text": "Add Entry", "width": 12},
+            "params": {"text": "Add Entry", "width": 12, "command": add},
         },
         {
             "grid": {"row": 5, "column": 3},

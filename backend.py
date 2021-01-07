@@ -75,8 +75,9 @@ def update(id, *args):
     )
 
 
-create_table()
-# populate_table([("Second book", "author2", 2011, 3455)])
+# create_table()
+# populate_table([("Li", "r1oga", 2011, 1)])
 # delete("retest")
 # update(3, "John")
-print(search(author="author2"))
+# print(search(author="author2"))
+# print(view_all())
