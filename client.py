@@ -1,4 +1,12 @@
 from tkinter import *
+import backend
+
+
+def view_all():
+    lb1.delete(0, END)
+    for record in backend.view_all():
+        lb1.insert(END, record)
+
 
 window = Tk()
 config = {
@@ -15,7 +23,10 @@ config = {
         {"grid": {"row": 1, "column": 3}, "params": {"textvariable": StringVar()}},
     ],
     "buttons": [
-        {"grid": {"row": 2, "column": 3}, "params": {"text": "View all", "width": 12}},
+        {
+            "grid": {"row": 2, "column": 3},
+            "params": {"text": "View all", "width": 12, "command": view_all},
+        },
         {
             "grid": {"row": 3, "column": 3},
             "params": {"text": "Search Entry", "width": 12},
