@@ -57,6 +57,8 @@ def update():
 
 
 window = Tk()
+window.wm_title("Book Store")
+
 config = {
     "labels": [
         {"grid": {"row": 0, "column": 0}, "params": {"text": "Title"}},
@@ -91,7 +93,10 @@ config = {
             "grid": {"row": 6, "column": 3},
             "params": {"text": "Delete Selected", "width": 12, "command": delete},
         },
-        {"grid": {"row": 7, "column": 3}, "params": {"text": "Close", "width": 12}},
+        {
+            "grid": {"row": 7, "column": 3},
+            "params": {"text": "Close", "width": 12, "command": window.destroy},
+        },
     ],
     "listboxes": [
         {
