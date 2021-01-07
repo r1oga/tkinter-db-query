@@ -2,9 +2,26 @@ from tkinter import *
 import backend
 
 
+def delete_lb1(func):
+    def inner(*args, **kwargs):
+        lb1.delete(0, END)
+        return func(*args, **kwargs)
+
+    return inner
+
+
+@delete_lb1
 def view_all():
-    lb1.delete(0, END)
     for record in backend.view_all():
+        lb1.insert(END, record)
+
+
+@delete_lb1
+def search():
+    # print(*tuple(t.get() for t in [title_text, author_text, year_text, isbn_text]))
+    for record in backend.search(
+        *tuple(t.get() for t in [title_text, author_text, year_text, isbn_text])
+    ):
         lb1.insert(END, record)
 
 
@@ -29,7 +46,7 @@ config = {
         },
         {
             "grid": {"row": 3, "column": 3},
-            "params": {"text": "Search Entry", "width": 12},
+            "params": {"text": "Search Entry", "width": 12, "command": search},
         },
         {
             "grid": {"row": 4, "column": 3},

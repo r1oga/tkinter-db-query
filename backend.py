@@ -78,5 +78,5 @@ def update(id, *args):
 create_table()
 # populate_table([("Second book", "author2", 2011, 3455)])
 # delete("retest")
-update(3, "John")
+# update(3, "John")
 print(search(author="author2"))
