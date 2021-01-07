@@ -4,41 +4,37 @@ DB = "books.db"
 
 
 class Database:
-    def connect_then_close(func):
+    def do_then_commit(func):
         def inner(self, *args, **kwargs):
-            conn = sqlite3.connect(self.db)
-            cursor = conn.cursor()
             result = None
             try:
-                result = func(self, cursor, *args, **kwargs)
+                result = func(self, *args, **kwargs)
             except Exception as e:
                 raise e
             else:
-                conn.commit()
-            finally:
-                conn.close()
+                self.conn.commit()
 
             return result
 
         return inner
 
-    @connect_then_close
-    def do(self, cursor, query, args=()):
-        cursor.execute(query, args)
-        return cursor.fetchall()
+    @do_then_commit
+    def do(self, query, args=()):
+        self.cursor.execute(query, args)
+        return self.cursor.fetchall()
 
     def __init__(self, db):
         self.db = db
-        conn = sqlite3.connect(db)
-        cursor = conn.cursor()
+        self.conn = sqlite3.connect(db)
+        self.cursor = self.conn.cursor()
         try:
-            cursor.execute(
+            self.cursor.execute(
                 "CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY, title TEXT, author TEXT, year INTEGER, isbn INTEGER)"
             )
         except Exception as e:
             raise e
-        finally:
-            conn.close()
+        else:
+            self.conn.commit()
 
     def create_table(self):
         self.do(
@@ -80,6 +76,10 @@ class Database:
             query="UPDATE books SET title=?, author=?, year=?, isbn=? WHERE id=?",
             args=[*new_attrs, id],
         )
+
+    # called when the script is exited
+    def __del__(self):
+        self.conn.close()
 
 
 # create_table()
