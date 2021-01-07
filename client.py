@@ -1,5 +1,7 @@
 from tkinter import *
-import backend
+from backend import Database
+
+db = Database()
 
 
 def delete_lb1(func):
@@ -12,19 +14,19 @@ def delete_lb1(func):
 
 @delete_lb1
 def view_all():
-    for record in backend.view_all():
+    for record in db.view_all():
         lb1.insert(END, record)
 
 
 @delete_lb1
 def search():
     # print(*tuple(t.get() for t in [title_text, author_text, year_text, isbn_text]))
-    for record in backend.search(*inputs()):
+    for record in db.search(*inputs()):
         lb1.insert(END, record)
 
 
 def add():
-    backend.populate_table([inputs()])
+    db.populate_table([inputs()])
     lb1.insert(END, inputs())
 
 
@@ -49,13 +51,13 @@ def get_selected_row(event):
 
 
 def delete():
-    backend.delete(selected_row[0])
+    db.delete(selected_row[0])
     lb1.delete(selected_index, selected_index)
     return
 
 
 def update():
-    backend.update(selected_row[0], *inputs())
+    db.update(selected_row[0], *inputs())
     view_all()
 
 
