@@ -33,14 +33,17 @@ def inputs():
 
 
 def get_selected_row(event):
-    global selected_row
-    global selected_index
-    selected_index = lb1.curselection()[0]
-    selected_row = lb1.get(selected_index)
+    try:
+        global selected_row
+        global selected_index
+        selected_index = lb1.curselection()[0]
+        selected_row = lb1.get(selected_index)
 
-    for entry, attr in zip(entries, selected_row[1:]):
-        entry.delete(0, END)
-        entry.insert(END, attr)
+        for entry, attr in zip(entries, selected_row[1:]):
+            entry.delete(0, END)
+            entry.insert(END, attr)
+    except IndexError:
+        pass
 
     return selected_row
 
