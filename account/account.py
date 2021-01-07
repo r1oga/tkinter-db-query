@@ -29,6 +29,8 @@ class Account:
 
 
 class Checking(Account):
+    type = "checking"  # class variable, shared by all instances
+
     def __init__(self, file_path, fee):
         Account.__init__(self, file_path)
         self.fee = fee
