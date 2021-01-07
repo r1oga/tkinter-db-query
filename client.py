@@ -28,9 +28,24 @@ def add():
     lb1.insert(END, inputs())
 
 
-@delete_lb1
 def inputs():
     return tuple(t.get() for t in [title_text, author_text, year_text, isbn_text])
+
+
+def get_selected_row_id(event):
+    global id
+    id = lb1.curselection()[0]
+    return id
+
+
+def delete():
+    backend.delete(id)
+    lb1.delete(id, id)
+    return
+
+
+# @delete_lb1
+# def update():
 
 
 window = Tk()
@@ -66,7 +81,7 @@ config = {
         },
         {
             "grid": {"row": 6, "column": 3},
-            "params": {"text": "Delete Selected", "width": 12},
+            "params": {"text": "Delete Selected", "width": 12, "command": delete},
         },
         {"grid": {"row": 7, "column": 3}, "params": {"text": "Close", "width": 12}},
     ],
@@ -102,5 +117,6 @@ sb1.grid(row=2, column=2, rowspan=6)
 
 lb1.configure(yscrollcommand=sb1.set)
 sb1.configure(command=lb1.yview)
+lb1.bind("<<ListboxSelect>>", get_selected_row_id)
 
 window.mainloop()

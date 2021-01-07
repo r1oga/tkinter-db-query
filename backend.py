@@ -44,8 +44,8 @@ def view_all():
     return do(query="SELECT * FROM books")
 
 
-def delete(item):
-    do(query="DELETE FROM books WHERE item=?", args=(item,))
+def delete(id):
+    do(query="DELETE FROM books WHERE id=?", args=(id,))
 
 
 def search(title="", author="", year="", isbn=""):
