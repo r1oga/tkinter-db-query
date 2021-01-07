@@ -28,7 +28,10 @@ class Account:
         self.balance += amount
 
 
-account = Account("account/balance.txt")
-print(account.balance)
-account.withdraw(100)
-print(account.balance)
+class Checking(Account):
+    def __init__(self, file_path, fee):
+        Account.__init__(self, file_path)
+        self.fee = fee
+
+    def transfer(self, amount):
+        self.withdraw(amount + self.fee)
