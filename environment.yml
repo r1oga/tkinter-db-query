@@ -1,0 +1,32 @@
+name: python-mega-course
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - _libgcc_mutex
+  - ca-certificates
+  - ld_impl_linux-64
+  - libstdcxx-ng
+  - libgcc-ng
+  - libffi
+  - ncurses
+  - openssl
+  - xz
+  - zlib
+  - libedit
+  - libprotobuf
+  - mysql-connector-c
+  - readline
+  - tk
+  - sqlite
+  - python=3.7
+  - certifi
+  - six
+  - wheel
+  - protobuf
+  - setuptools
+  - mysql-connector-python
+  - pip
+  - folium
+  - black
+  - pyinstaller
